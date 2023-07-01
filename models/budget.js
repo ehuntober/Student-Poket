@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const  budgetSchema = new mongoose.Schma({
+const  budgetSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true
@@ -15,7 +15,7 @@ const  budgetSchema = new mongoose.Schma({
 
 })
 
-const Budget = mongoose.model('Budget',budgetSchema)
+const Budget = mongoose.model('Budgets',budgetSchema)
 
 
 const expenseSchema = new mongoose.Schema({
