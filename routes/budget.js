@@ -1,12 +1,10 @@
 
-
-
 const express = require('express');
 const router = express.Router();
-const { createBudget,createExpense } = require('../controllers/budget');
+const budgetController = require('../controllers/budgetController');
 
-router.route('/budgets').post(createBudget);
-router.route('/expenses').post(createExpense);
+router.get('/', budgetController.getAllBudgets);
+router.post('/', budgetController.createBudget);
 
 module.exports = router;
 
