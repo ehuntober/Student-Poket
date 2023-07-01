@@ -25,6 +25,9 @@ res.send('<h1> Student Poket API </h1> <a href="/api/v1/"> Routes </a>')})
 const budgetsRouter = require('./routes/budget');
 app.use('/budgets', budgetsRouter);
 
+const expensesRouter = require('./routes/expenses');
+app.use('/expenses', expensesRouter);
+
 
 // products route
 
