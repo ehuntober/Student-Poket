@@ -28,6 +28,10 @@ app.use('/budgets', budgetsRouter);
 const expensesRouter = require('./routes/expenses');
 app.use('/expenses', expensesRouter);
 
+const ExpenseCategoryRouter = require('./routes/expenseCategories');
+app.use('/expense-category', ExpenseCategoryRouter);
+
+
 
 // products route
 
