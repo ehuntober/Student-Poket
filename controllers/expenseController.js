@@ -29,7 +29,54 @@ const createExpense = async (req, res) => {
   }
 };
 
+
+
+
+const updateExpense = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, amount } = req.body;
+
+    const updatedExpense = await Expense.findByIdAndUpdate(
+      id,
+      { name, amount },
+      { new: true }
+    );
+
+    if (!updatedExpense) {
+      return res.status(404).json({ error: 'Expense not found' });
+    }
+
+    res.json(updatedExpense);
+  } catch (error) {
+    console.error('Error updating the expense', error);
+    res.status(500).json({ error: 'An error occurred while updating the expense' });
+  }
+};
+
+const deleteExpense = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const deletedExpense = await Expense.findByIdAndDelete(id);
+
+    if (!deletedExpense) {
+      return res.status(404).json({ error: 'Expense not found' });
+    }
+
+    res.json({ message: 'Expense deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting the expense', error);
+    res.status(500).json({ error: 'An error occurred while deleting the expense' });
+  }
+};
+
+
+
+
 module.exports = {
   getAllExpenses,
   createExpense,
+  updateExpense,
+  deleteExpense,
 };
