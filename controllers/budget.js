@@ -23,12 +23,12 @@ const createBudget = async (req, res) => {
 
 const createExpense = async(req,res) =>{
     try {
-        const { description, amount, budgetId } = req.body;
+        const { description, amount } = req.body;
     
         const newExpense = new Expense({
           description,
           amount,
-          budgetId,
+         
         });
     
         await newExpense.save();
