@@ -141,8 +141,9 @@ const addExpenseEntry = async (req, res) => {
     // Save the expense entry
     await expense.save();
 
-    // Update the budget's total expenses
+    // Update the budget's total expenses and remaining amount
     budget.totalExpenses += amount;
+    budget.remainingAmount = budget.totalAmount - budget.totalExpenses;
     await budget.save();
 
     res.status(201).json(expense);
