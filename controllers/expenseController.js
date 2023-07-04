@@ -122,39 +122,39 @@ const getFilteredAndSortedExpenses = async (req, res) => {
 
 const addExpenseEntry = async (req, res) => {
   try {
-    const { budgetId } = req.params;
     const { name, amount } = req.body;
+    const budgetId = req.params.budgetId;
 
-    // Check if the budget exists
+    // Find the budget by ID
     const budget = await Budget.findById(budgetId);
+
     if (!budget) {
       return res.status(404).json({ error: 'Budget not found' });
     }
 
+    // Calculate the remaining amount
+    const remainingAmount = budget.totalAmount - amount;
+
     // Create a new expense entry
-    const expense = new Expense({
+    const newExpense = new Expense({
       name,
       amount,
       budgetId,
     });
 
-    // Save the expense entry
-    await expense.save();
+    // Save the new expense entry
+    await newExpense.save();
 
-    // Update the budget's total expenses and remaining amount
-    budget.totalExpenses += amount;
-    budget.remainingAmount = budget.totalAmount - budget.totalExpenses;
+    // Update the remaining amount in the budget
+    budget.remainingAmount = remainingAmount;
     await budget.save();
 
-    res.status(201).json(expense);
+    res.status(201).json(newExpense);
   } catch (error) {
-    console.error('Error adding expense entry:', error);
+    console.error('Error adding expense entry', error);
     res.status(500).json({ error: 'An error occurred while adding the expense entry' });
   }
 };
-
-
-
 
 
 
