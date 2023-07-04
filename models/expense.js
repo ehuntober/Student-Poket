@@ -12,13 +12,13 @@ const expenseSchema = new mongoose.Schema({
       ref: 'ExpenseCategory',
       required: true,
     },
-    // date: {
-    //   type: Date,
-    //   default: Date.now,
-    // }
+    date: {
+      type: Date,
+      default: Date.now,
+    },
 
     startDate: { type: Date, default: Date.now },
-    endDate: { type: Date, default: null },
+    endDate: { type: Date, default: null }
 
 
 });
