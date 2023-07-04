@@ -7,8 +7,20 @@ const expenseSchema = new mongoose.Schema({
   budgetId: { type: mongoose.Schema.Types.ObjectId, 
     ref: 'Budget', 
     required: true },
+    category: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'ExpenseCategory',
+      required: true,
+    },
+    // date: {
+    //   type: Date,
+    //   default: Date.now,
+    // }
+
+
 });
 
 const Expense = mongoose.model('Expense', expenseSchema);
 
 module.exports = Expense;
+

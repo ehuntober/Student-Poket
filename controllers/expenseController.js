@@ -13,11 +13,13 @@ const getAllExpenses = async (req, res) => {
 
 const createExpense = async (req, res) => {
   try {
-    const { name, amount, budgetId } = req.body;
+    const { name, amount, budgetId, category, date } = req.body;
     const newExpense = new Expense({
       name,
       amount,
       budgetId,
+      category,
+      // date,
     });
 
     await newExpense.save();
@@ -28,6 +30,8 @@ const createExpense = async (req, res) => {
     res.status(500).json({ error: 'An error occurred while creating a new expense' });
   }
 };
+
+
 
 
 
