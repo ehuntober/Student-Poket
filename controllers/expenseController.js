@@ -76,19 +76,29 @@ const deleteExpense = async (req, res) => {
 };
 
 const getFilteredAndSortedExpenses = async (req, res) => {
-  try{
-    const {budgetId,category,sortBy,sortOrder} = req.query;
+  try {
+    const { budgetId, category, startDate, endDate, sortBy, sortOrder } = req.query;
 
+    // Create a filter object based on the provided query parameters
     const filter = {};
 
-    if(budgetId) {
+    if (budgetId) {
       filter.budgetId = budgetId;
     }
 
-    if(category){
+    if (category) {
       filter.category = category;
     }
 
+    if (startDate && endDate) {
+      filter.date = { $gte: new Date(startDate), $lte: new Date(endDate) };
+    } else if (startDate) {
+      filter.date = { $gte: new Date(startDate) };
+    } else if (endDate) {
+      filter.date = { $lte: new Date(endDate) };
+    }
+
+    // Create a sort object based on the provided sortBy and sortOrder parameters
     const sort = {};
     if (sortBy && sortOrder) {
       sort[sortBy] = sortOrder === 'asc' ? 1 : -1;
@@ -102,7 +112,7 @@ const getFilteredAndSortedExpenses = async (req, res) => {
     console.error('Error fetching filtered and sorted expenses', error);
     res.status(500).json({ error: 'An error occurred while fetching expenses' });
   }
-  }
+};
 
 
 
