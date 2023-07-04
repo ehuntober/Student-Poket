@@ -125,5 +125,5 @@ module.exports = {
   createExpense,
   updateExpense,
   deleteExpense,
-  getFilteredAndSortedExpenses;
+  getFilteredAndSortedExpenses
 };
