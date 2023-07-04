@@ -1,5 +1,6 @@
 // controllers/expenseController.js
 const Expense = require('../models/expense');
+const Budget = require('../models/budget');
 
 const getAllExpenses = async (req, res) => {
   try {
@@ -119,11 +120,50 @@ const getFilteredAndSortedExpenses = async (req, res) => {
 
 
 
+const addExpenseEntry = async (req, res) => {
+  try {
+    const { budgetId } = req.params;
+    const { name, amount } = req.body;
+
+    // Check if the budget exists
+    const budget = await Budget.findById(budgetId);
+    if (!budget) {
+      return res.status(404).json({ error: 'Budget not found' });
+    }
+
+    // Create a new expense entry
+    const expense = new Expense({
+      name,
+      amount,
+      budgetId,
+    });
+
+    // Save the expense entry
+    await expense.save();
+
+    // Update the budget's total expenses
+    budget.totalExpenses += amount;
+    await budget.save();
+
+    res.status(201).json(expense);
+  } catch (error) {
+    console.error('Error adding expense entry:', error);
+    res.status(500).json({ error: 'An error occurred while adding the expense entry' });
+  }
+};
+
+
+
+
+
+
 
 module.exports = {
   getAllExpenses,
   createExpense,
   updateExpense,
   deleteExpense,
-  getFilteredAndSortedExpenses
+  getFilteredAndSortedExpenses,
+  addExpenseEntry,
+
 };
