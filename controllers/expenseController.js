@@ -115,7 +115,7 @@ const getFilteredAndSortedExpenses = async (req, res) => {
 };
 
 
-
+/// GET /expenses/filtered?budgetId=60e3f205b4a8b522c48f4c6f&category=60e3f205b4a8b522c48f4c71&sortBy=amount&sortOrder=desc
 
 
 
